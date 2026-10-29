@@ -1,15 +1,15 @@
 'use client';
 import Link from 'next/link';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+} from '../ui/card';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import { login, LoginState } from '@/app/(auth)/login/actions';
 import { useActionState } from 'react';
 import { Loader } from 'lucide-react';

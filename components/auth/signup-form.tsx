@@ -1,15 +1,15 @@
 'use client';
 import { signup, SignupState } from '@/app/(auth)/cadastro/actions';
-import { Button } from './ui/button';
+import { Button } from '../ui/button';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from './ui/card';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+} from '../ui/card';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 import { useActionState, useState } from 'react';
 import { Loader } from 'lucide-react';
 import Link from 'next/link';

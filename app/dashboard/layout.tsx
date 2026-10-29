@@ -1,4 +1,4 @@
-import Header from '@/components/header';
+import HeaderDashboard from '@/components/dashboard/header-dashboard';
 import { createClient } from '@/lib/supabase/server';
 import { redirect } from 'next/navigation';
 import { connection } from 'next/server';
@@ -31,8 +31,8 @@ export default async function DashboardLayout({
   }
 
   return (
-    <div>
-      <Header profile={profile} />
+    <div className="flex min-h-full flex-col">
+      <HeaderDashboard profile={profile} />
       {children}
     </div>
   );

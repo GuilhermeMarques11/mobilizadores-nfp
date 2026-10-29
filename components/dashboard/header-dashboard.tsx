@@ -1,12 +1,11 @@
-import { ModeToggle } from './mode-toggle';
-import SignOutButton from './signout-button';
+import SignOutButton from '../signout-button';
 
 interface HeaderProps {
   profile: {
     full_name: string | null;
   } | null;
 }
-export default function Header({ profile }: HeaderProps) {
+export default function HeaderDashboard({ profile }: HeaderProps) {
   const fullName = profile?.full_name;
   const firstName = fullName?.split(' ')[0];
   return (
@@ -17,7 +16,6 @@ export default function Header({ profile }: HeaderProps) {
           <p>Mobilizadores</p>
         </div>
         <p className="text-primary-foreground">Olá, {firstName}</p>
-        <ModeToggle />
         <SignOutButton />
       </div>
     </header>

@@ -3,15 +3,21 @@
 import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 
-export type SigninTermsState = {
+export type ActionState = {
   success: boolean;
   message: string;
 };
 
+/** ****************************************************
+ Form Action para aceite dos termos e assinatura do contrato
+*******************************************************/
 export async function signinTerms(
-  _previousState: SigninTermsState,
+  _previousState: ActionState,
   formData: FormData,
-): Promise<SigninTermsState> {
+): Promise<ActionState> {
+  const signature = formData.get('signature') as string;
+  const termsAccepted = formData.get('termsAccepted');
+
   const supabase = await createClient();
   const {
     data: { user },
@@ -24,8 +30,6 @@ export async function signinTerms(
       message: 'Usuário não autenticado.',
     };
   }
-  const signature = formData.get('signature') as string;
-  const termsAccepted = formData.get('termsAccepted');
 
   if (!termsAccepted) {
     return {
@@ -92,10 +96,57 @@ export async function signinTerms(
   }
 
   // Revalidar a rota do dashboard para refletir o novo estado de ACTIVE
-  revalidatePath('/dashbard');
+  revalidatePath('/dashboard');
 
   return {
     success: true,
     message: 'Termos assinados com sucesso.',
   };
+}
+
+/** ****************************************************
+ Form Action para registrar novo CPF
+*******************************************************/
+export async function registerCpf(
+  _previousState: ActionState | null,
+  formData: FormData,
+) {
+  const cpf = formData.get('cpf') as string;
+
+  if (!cpf || cpf.trim() === '') {
+    return { success: false, message: 'O CPF é obrigatório' };
+  }
+
+  const supabase = await createClient();
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser();
+
+  if (!user || authError) {
+    return { success: false, message: 'Usuário não autenticado.' };
+  }
+
+  // Inserir o CPF na tabela 'cpfs' assioando ao id do usuário
+  const { error: insertError } = await supabase.from('cpfs').insert([
+    {
+      cpf: cpf.trim(),
+      user_id: user.id,
+      cpf_status: 'PENDING',
+    },
+  ]);
+
+  if (insertError) {
+    if (insertError.code === '23505') {
+      return {
+        success: false,
+        message: 'Este CPF já se encontra registrado no sistema.',
+      };
+    }
+    console.error('Erro ao inserir CPF:', insertError.message);
+    return { success: false, message: 'Erro ao cadastrar o CPF.' };
+  }
+
+  revalidatePath('/dashboard');
+  return { success: true, message: 'CPF cadastrado com sucesso.' };
 }
