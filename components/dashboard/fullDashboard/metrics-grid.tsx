@@ -8,7 +8,7 @@ export default async function MetricsGrid() {
   const pendingCpfs = cpfs?.filter((cpf) => cpf.cpf_status === 'PENDING');
 
   return (
-    <section className="grid grid-cols-2 gap-3 sm:grid-cols-4">
+    <div className="grid grid-cols-2 gap-3 sm:grid-cols-4">
       <div className="rounded-2xl border border-[#e5e7eb] bg-white p-4 shadow-sm col-span-2 sm:col-span-1">
         <span className="grid w-9 h-9 place-items-center rounded-full bg-[#6b6b38]/15 text-[#6b6b38]">
           <Users className="w-5 h-5" />
@@ -44,6 +44,6 @@ export default async function MetricsGrid() {
         <p className="mt-3 text-sm text-gray-600">A receber</p>
         <p className="text-2xl font-extrabold text-[#2f2f17]">R$ -</p>
       </div>
-    </section>
+    </div>
   );
 }

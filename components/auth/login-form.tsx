@@ -10,7 +10,7 @@ import {
 } from '../ui/card';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { login, LoginState } from '@/app/(auth)/login/actions';
+import { login, LoginState } from '@/app/(auth)/entrar/actions';
 import { useActionState } from 'react';
 import { Loader } from 'lucide-react';
 

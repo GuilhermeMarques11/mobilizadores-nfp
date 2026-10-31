@@ -1,6 +1,6 @@
 'use client';
 
-import { registerCpf } from '@/app/dashboard/actions';
+import { registerCpf } from '@/app/(mobilizer)/painel/actions';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -12,12 +12,19 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
+import { maskCpf } from '@/lib/utils';
 import { Plus } from 'lucide-react';
-import { useActionState, useState } from 'react';
+import { ChangeEvent, useActionState, useState } from 'react';
 
 export default function RegisterCpf() {
   const [state, formAction, isPending] = useActionState(registerCpf, null);
   const [cpf, setCpf] = useState('');
+
+  const handleChangeCpf = (e: ChangeEvent<HTMLInputElement>) => {
+    const maskedValue = maskCpf(e.target.value);
+    setCpf(maskedValue);
+  };
+
   return (
     <Dialog>
       <DialogTrigger
@@ -48,9 +55,11 @@ export default function RegisterCpf() {
           <Input
             id="cpf"
             name="cpf"
+            value={cpf}
             required
             placeholder="000.000.000-00"
-            onChange={(e) => setCpf(e.target.value)}
+            onChange={handleChangeCpf}
+            maxLength={14}
             className="w-full h-12 rounded-lg border bg-white px-3 text-lg text-gray-900 outline-none"
           />
           <Button

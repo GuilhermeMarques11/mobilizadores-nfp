@@ -45,7 +45,7 @@ export async function updateSession(request: NextRequest) {
   const user = data?.claims;
 
   // Lista de rotas que exigem autenticação
-  const protectedRoutes = ['/dashboard'];
+  const protectedRoutes = ['/dashboard', '/admin', '/perfils'];
 
   // Verifica se a rota atual começa com algum dos itens da lista
   const isProtectedRoute = protectedRoutes.some((route) =>
@@ -55,7 +55,7 @@ export async function updateSession(request: NextRequest) {
   if (!user && isProtectedRoute) {
     // no user, potentially respond by redirecting the user to the login page
     const url = request.nextUrl.clone();
-    url.pathname = '/login';
+    url.pathname = '/entrar';
     return NextResponse.redirect(url);
   }
 

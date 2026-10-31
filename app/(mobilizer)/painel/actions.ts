@@ -1,6 +1,7 @@
 'use server';
 
 import { createClient } from '@/lib/supabase/server';
+import { unMask } from '@/lib/utils';
 import { revalidatePath } from 'next/cache';
 
 export type ActionState = {
@@ -113,6 +114,8 @@ export async function registerCpf(
 ) {
   const cpf = formData.get('cpf') as string;
 
+  const cleanCpf = unMask(cpf);
+
   if (!cpf || cpf.trim() === '') {
     return { success: false, message: 'O CPF é obrigatório' };
   }
@@ -130,7 +133,7 @@ export async function registerCpf(
   // Inserir o CPF na tabela 'cpfs' assioando ao id do usuário
   const { error: insertError } = await supabase.from('cpfs').insert([
     {
-      cpf: cpf.trim(),
+      cpf: cleanCpf.trim(),
       user_id: user.id,
       cpf_status: 'PENDING',
     },

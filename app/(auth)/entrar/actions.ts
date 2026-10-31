@@ -15,25 +15,29 @@ export async function login(
   const password = formData.get('password') as string;
   const supabase = await createClient();
 
-  const { error } = await supabase.auth.signInWithPassword({
+  const { data: authData, error } = await supabase.auth.signInWithPassword({
     email,
     password,
   });
 
-  if (!email || !password) {
+  if (error || !authData.user) {
     return {
       success: false,
-      message: 'E-mail e senha são obrigatórios.',
+      message: error?.message || 'E-mail e senha são obrigatórios.',
     };
   }
 
-  if (error) {
-    return {
-      success: false,
-      message: error.message,
-    };
-  }
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('role')
+    .eq('id', authData.user.id)
+    .single();
 
-  // Se o login for feito com sucesso
-  redirect('/dashboard');
+  const userRole = profile?.role;
+
+  if (userRole === 'admin') {
+    redirect('/admin/painel');
+  } else {
+    redirect('/painel');
+  }
 }

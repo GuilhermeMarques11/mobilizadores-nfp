@@ -25,8 +25,12 @@ export default function CpfItem({ cpf, id, created_at, cpf_status }: CpfType) {
   const [isVisible, setIsVisible] = useState(false);
 
   const formatCpf = (cpf: string, isVisible: boolean) => {
-    if (isVisible) return cpf;
-    return cpf.replace(/(\d{3})\.(\d{3})\.(\d{3})-(\d{2})/, '$1.***.***-$4');
+    const clean = cpf.replace(/\D/g, '');
+
+    if (isVisible) {
+      return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+    }
+    return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.***.***-$4');
   };
 
   return (

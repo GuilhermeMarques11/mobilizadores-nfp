@@ -12,7 +12,7 @@ import { Label } from '../ui/label';
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useActionState } from 'react';
-import { signinTerms, ActionState } from '@/app/dashboard/actions';
+import { signinTerms, ActionState } from '@/app/(mobilizer)/painel/actions';
 
 interface ContractSigning {
   fullName: string;

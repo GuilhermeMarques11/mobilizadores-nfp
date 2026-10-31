@@ -10,9 +10,10 @@ import {
 } from '../ui/card';
 import { Input } from '../ui/input';
 import { Label } from '../ui/label';
-import { useActionState, useState } from 'react';
+import { ChangeEvent, useActionState, useState } from 'react';
 import { Loader } from 'lucide-react';
 import Link from 'next/link';
+import { maskCpf, maskPhone } from '@/lib/utils';
 
 export default function SignupForm() {
   const [password, setPassword] = useState('');
@@ -22,6 +23,18 @@ export default function SignupForm() {
     SignupState | null,
     FormData
   >(signup, null);
+  const [cpf, setCpf] = useState('');
+  const [phone, setPhone] = useState('');
+
+  const handleChangeCpf = (e: ChangeEvent<HTMLInputElement>) => {
+    const maskedValue = maskCpf(e.target.value);
+    setCpf(maskedValue);
+  };
+
+  const handleChangePhone = (e: ChangeEvent<HTMLInputElement>) => {
+    setPhone(maskPhone(e.target.value));
+  };
+
   return (
     <>
       <Card className="mx-auto w-full max-w-2xl">
@@ -36,20 +49,60 @@ export default function SignupForm() {
             <div className="grid gap-4">
               <div className="space-y-1">
                 <Label htmlFor="name">Nome Completo</Label>
-                <Input id="name" type="text" name="fullName" required />
+                <Input
+                  id="name"
+                  type="text"
+                  name="fullName"
+                  placeholder="Ex: Ana Paula Ferreira"
+                  required
+                />
               </div>
               <div className="space-y-1">
                 <Label htmlFor="email">E-mail</Label>
-                <Input id="email" type="email" name="email" required />
+                <Input
+                  id="email"
+                  type="email"
+                  name="email"
+                  placeholder="voce@email.com"
+                  required
+                />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="userCpf">CPF</Label>
+                <Input
+                  id="userCpf"
+                  type="text"
+                  name="userCpf"
+                  placeholder="000.000.000-00"
+                  onChange={handleChangeCpf}
+                  value={cpf}
+                  maxLength={14}
+                  required
+                />
               </div>
               <div className="grid grid-cols-2 gap-4">
                 <div className="space-y-1">
                   <Label htmlFor="phone">Telefone (Whatsapp)</Label>
-                  <Input id="phone" type="tel" name="phone" required />
+                  <Input
+                    id="phone"
+                    type="tel"
+                    name="phone"
+                    value={phone}
+                    onChange={handleChangePhone}
+                    maxLength={15}
+                    placeholder="(xx) xxxxx-xxxx"
+                    required
+                  />
                 </div>
                 <div className="space-y-1">
                   <Label htmlFor="city">Cidade</Label>
-                  <Input id="city" type="text" name="city" required />
+                  <Input
+                    id="city"
+                    type="text"
+                    name="city"
+                    placeholder="Ex: São Paulo - SP"
+                    required
+                  />
                 </div>
               </div>
               <div className="grid grid-cols-2 gap-4">
@@ -94,7 +147,7 @@ export default function SignupForm() {
       </Card>
       <p className="mt-4">
         Já é um mobilizador?{' '}
-        <Link href="/login" className="text-[#007399]">
+        <Link href="/entrar" className="text-[#007399]">
           Entrar
         </Link>
       </p>
