@@ -43,17 +43,19 @@ export default async function MobilizersList() {
               </th>
             </tr>
           </thead>
-          {profile?.map((item) => {
-            const cpfsCount = item.cpfs ? item.cpfs.length : 0;
+          <tbody className="divide-y divide-[#E5E7EB]">
+            {profile?.map((item) => {
+              const cpfsCount = item.cpfs ? item.cpfs.length : 0;
 
-            return (
-              <MobilizerItem
-                key={item.id}
-                profile={item}
-                cpfsCount={cpfsCount}
-              />
-            );
-          })}
+              return (
+                <MobilizerItem
+                  key={item.id}
+                  profile={item}
+                  cpfsCount={cpfsCount}
+                />
+              );
+            })}
+          </tbody>
         </table>
       </div>
     </main>
