@@ -35,7 +35,7 @@ export default function RootLayout({ children }: LayoutProps<'/'>) {
         inter.variable,
       )}
     >
-      <body className="h-full" suppressHydrationWarning>
+      <body className="h-full bg-[#F9F8F3]" suppressHydrationWarning>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

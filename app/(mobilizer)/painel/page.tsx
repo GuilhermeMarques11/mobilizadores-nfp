@@ -34,7 +34,7 @@ export default async function DashboardPage() {
   }
 
   return (
-    <main className="flex flex-1 items-start justify-center px-4 py-6 sm:items-center sm:py-10 bg-[#F9F8F3]">
+    <main className="flex flex-1 items-start justify-center px-4 py-6 sm:items-center sm:py-10">
       {userData.status === 'PENDING' && <PendingApproval />}
 
       {userData.status === 'APPROVED' && (

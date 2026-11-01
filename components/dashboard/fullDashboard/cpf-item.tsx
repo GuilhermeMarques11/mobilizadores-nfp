@@ -1,27 +1,10 @@
 'use client';
+import { statusName, statusStyles } from '@/lib/utils';
+import { CpfType } from '@/types/cpf';
 import { Eye } from 'lucide-react';
 import { useState } from 'react';
 
-export interface CpfType {
-  cpf: string;
-  id: string;
-  created_at: Date;
-  cpf_status: string;
-}
-
 export default function CpfItem({ cpf, id, created_at, cpf_status }: CpfType) {
-  const statusStyles: Record<string, string> = {
-    PENDING: 'bg-yellow-100 text-yellow-800',
-    APPROVED: 'bg-green-100 text-green-800',
-    REJECTED: 'bg-red-100 text-red-800',
-  };
-
-  const statusName: Record<string, string> = {
-    PENDING: 'Pendente',
-    APPROVED: 'Aprovado',
-    REJECTED: 'Rejeitado',
-  };
-
   const [isVisible, setIsVisible] = useState(false);
 
   const formatCpf = (cpf: string, isVisible: boolean) => {

@@ -1,7 +1,9 @@
 export default function AdminDashboardPage() {
   return (
-    <div>
-      <h1>Painel</h1>
-    </div>
+    <main>
+      <div className="mb-6">
+        <h1 className="text-3xl font-extrabold text-gray-950">Visão Geral</h1>
+      </div>
+    </main>
   );
 }

@@ -1,5 +1,6 @@
+'use client';
+
 import Link from 'next/link';
-import SignOutButton from '../signout-button';
 import { Button } from '../ui/button';
 import {
   DropdownMenu,
@@ -8,23 +9,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '../ui/dropdown-menu';
-import { ChevronDown, LayoutDashboardIcon, User } from 'lucide-react';
+import { ChevronDown, LayoutDashboardIcon, LogOut, User } from 'lucide-react';
+import { UserProps } from '@/types/user';
+import { handleSignOut } from '@/services/auth';
+import { getInitials } from '@/lib/utils';
 
-interface HeaderProps {
-  profile: {
-    full_name: string | null;
-    email: string;
-  } | null;
-}
-export default function HeaderMobilizer({ profile }: HeaderProps) {
+export default function HeaderMobilizer({ profile }: UserProps) {
   const fullName = profile?.full_name;
   const firstName = fullName?.split(' ')[0];
-  const nameInitials = fullName
-    ?.trim()
-    .split(' ')
-    .slice(0, 2)
-    .map((word) => word[0])
-    .join('');
+  const nameInitials = getInitials(fullName);
   return (
     <header className="bg-primary py-2">
       <div className="max-w-4xl mx-auto px-4 flex items-center justify-between">
@@ -77,7 +70,14 @@ export default function HeaderMobilizer({ profile }: HeaderProps) {
                 </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <SignOutButton />
+                <Button
+                  variant="ghost"
+                  onClick={handleSignOut}
+                  className="flex justify-start items-center gap-2 h-11 w-full rounded-xl text-left text-red-700 cursor-pointer pl-0"
+                >
+                  <LogOut className="w-6 h-6" />
+                  Sair
+                </Button>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>

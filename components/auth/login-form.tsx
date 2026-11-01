@@ -52,7 +52,7 @@ export default function LoginForm() {
         </CardContent>
       </Card>
       <p className="mt-4">
-        Ainda não um mobilizador?{' '}
+        Ainda não é um mobilizador?{' '}
         <Link href="/cadastro" className="text-[#007399]">
           Cadastre-se
         </Link>

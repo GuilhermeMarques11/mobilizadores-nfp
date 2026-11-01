@@ -1,7 +1,7 @@
 export { cn } from 'cn';
 
 /******************
- Mask CPF input
+ Máscara para o campo de CPF
  ******************/
 export const maskCpf = (value: string) => {
   return value
@@ -13,7 +13,7 @@ export const maskCpf = (value: string) => {
 };
 
 /******************
- Mask Phone input
+ Máscara para o campo de telefone
  ******************/
 export const maskPhone = (value: string) => {
   return value
@@ -24,8 +24,39 @@ export const maskPhone = (value: string) => {
 };
 
 /******************
- Unmask input
+ Remove a máscara do campo
  ******************/
 export const unMask = (value: string) => {
   return value.replace(/\D/g, '');
+};
+
+/******************
+ Pega as iniciais do nome
+ ******************/
+export function getInitials(fullName?: string | null): string {
+  if (!fullName) return '';
+
+  return fullName
+    .trim()
+    .split(' ')
+    .slice(0, 2)
+    .map((word) => word[0])
+    .join('');
+}
+
+/******************
+ Altera cor e label de acordo com status (Para CPF e Usuário)
+ ******************/
+export const statusStyles: Record<string, string> = {
+  PENDING: 'bg-yellow-100 text-yellow-800',
+  APPROVED: 'bg-green-100 text-green-800',
+  ACTIVE: 'bg-green-100 text-green-800',
+  REJECTED: 'bg-red-100 text-red-800',
+};
+
+export const statusName: Record<string, string> = {
+  PENDING: 'Pendente',
+  APPROVED: 'Aprovado',
+  ACTIVE: 'Ativo',
+  REJECTED: 'Rejeitado',
 };
