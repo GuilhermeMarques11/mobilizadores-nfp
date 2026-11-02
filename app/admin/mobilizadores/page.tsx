@@ -1,17 +1,12 @@
-import MobilizerItem from '@/components/admin/painel/mobilizer-item';
-import { createClient } from '@/lib/supabase/server';
-import { connection } from 'next/server';
+import MobilizerList from '@/components/admin/mobilizer-list';
+import { Loader } from 'lucide-react';
+import { Suspense } from 'react';
 
-export const instant = false;
+interface PageProps {
+  searchParams: Promise<{ q?: string; status?: string }>;
+}
 
-export default async function MobilizersList() {
-  await connection();
-  const supabase = await createClient();
-  const { data: profile } = await supabase
-    .from('profiles')
-    .select('id, full_name, email, city, status, cpfs(id)')
-    .eq('role', 'mobilizer');
-
+export default function MobilizerListPage({ searchParams }: PageProps) {
   return (
     <main>
       <div className="mb-6">
@@ -22,42 +17,9 @@ export default async function MobilizersList() {
           Analise cadastros e acompanhe o status de cada mobilizador
         </p>
       </div>
-      <div className="overflow-x-auto rounded-2xl border border-gray-200 bg-white shadow-sm">
-        <table className="w-full min-w-215">
-          <thead className="border-b-2 border-amber-500 bg-[#F3F1E6]">
-            <tr>
-              <th className="px-4 py-3 text-sm font-bold text-gray-600 text-left">
-                Mobilizador
-              </th>
-              <th className="px-4 py-3 text-sm font-bold text-gray-600 text-left">
-                Cidade
-              </th>
-              <th className="px-4 py-3 text-sm font-bold text-gray-600 text-right">
-                CPFs
-              </th>
-              <th className="px-4 py-3 text-sm font-bold text-gray-600 text-left">
-                Status
-              </th>
-              <th className="px-4 py-3 text-sm font-bold text-gray-600 text-right">
-                Ações
-              </th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-[#E5E7EB]">
-            {profile?.map((item) => {
-              const cpfsCount = item.cpfs ? item.cpfs.length : 0;
-
-              return (
-                <MobilizerItem
-                  key={item.id}
-                  profile={item}
-                  cpfsCount={cpfsCount}
-                />
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <Suspense fallback={<Loader className="animate-spin" />}>
+        <MobilizerList searchParams={searchParams} />
+      </Suspense>
     </main>
   );
 }

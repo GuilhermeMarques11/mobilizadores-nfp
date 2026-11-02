@@ -54,7 +54,7 @@ export default function MobilizerItem({
     }
   };
 
-  // Função para rejeitar usuário
+  // Função para reconsiderar usuário
   const handleReconsiderClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
     if (!profile.id) return;
@@ -83,12 +83,15 @@ export default function MobilizerItem({
             {nameInitials}
           </span>
           <div>
-            <p className="font-bold text-gray-900">{profile?.full_name}</p>
-            <p className="text-sm text-gray-500">{profile?.email}</p>
+            <p className="font-bold text-gray-900">{profile.full_name}</p>
+            <p className="text-sm text-gray-500">{profile.email}</p>
           </div>
         </div>
       </td>
       <td className="px-4 py-3 text-gray-700">{profile?.city}</td>
+      <td className="px-4 py-3 text-gray-700">
+        {new Date(profile.created_at).toLocaleDateString('pt-BR')}
+      </td>
       <td className="px-4 py-3 text-right text-gray-700">{cpfsCount}</td>
       <td className="px-4 py-3">
         <span
@@ -106,10 +109,7 @@ export default function MobilizerItem({
                 className="inline-flex items-center justify-center gap-2 bg-[#E06138] text-white hover:bg-[#C8512B] cursor-pointer rounded-lg"
               >
                 {isPending ? (
-                  <Loader
-                    className="h5
-     w-5"
-                  />
+                  <Loader className="h-5 w-5" />
                 ) : (
                   <>
                     <Check className="h-4 w-4" />
@@ -133,6 +133,10 @@ export default function MobilizerItem({
             >
               Reconsiderar
             </Button>
+          ) : profile.status === 'APPROVED' ? (
+            <span className="text-sm text-yellow-400">
+              Pendente assinatura do contrato
+            </span>
           ) : (
             <span className="text-sm text-gray-400">Sem ações pendentes</span>
           )}

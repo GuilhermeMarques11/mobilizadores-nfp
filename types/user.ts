@@ -6,5 +6,6 @@ export interface UserProps {
     status?: string;
     city?: string;
     id: string;
+    created_at: Date;
   };
 }
