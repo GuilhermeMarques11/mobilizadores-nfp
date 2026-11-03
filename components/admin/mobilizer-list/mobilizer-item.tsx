@@ -26,7 +26,7 @@ export default function MobilizerItem({
     if (!profile.id) return;
 
     startTransition(async () => {
-      const res = await handleApproveUser(profile.id);
+      const res = await handleApproveUser(profile?.id);
 
       if (res.success) {
         router.refresh();
@@ -90,7 +90,7 @@ export default function MobilizerItem({
       </td>
       <td className="px-4 py-3 text-gray-700">{profile?.city}</td>
       <td className="px-4 py-3 text-gray-700">
-        {new Date(profile.created_at).toLocaleDateString('pt-BR')}
+        {new Date(profile?.created_at).toLocaleDateString('pt-BR')}
       </td>
       <td className="px-4 py-3 text-right text-gray-700">{cpfsCount}</td>
       <td className="px-4 py-3">

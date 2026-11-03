@@ -28,7 +28,7 @@ export default async function AdminDashBoardLayout({
 
   return (
     <SidebarProvider>
-      <AdminSidebar profile={profile} />
+      {profile && <AdminSidebar profile={profile} />}
       <div className="flex-1 p-8">{children}</div>
     </SidebarProvider>
   );

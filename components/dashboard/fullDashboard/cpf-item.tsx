@@ -1,20 +1,11 @@
 'use client';
-import { statusName, statusStyles } from '@/lib/utils';
+import { formatCpf, statusName, statusStyles } from '@/lib/utils';
 import { CpfType } from '@/types/cpf';
 import { Eye } from 'lucide-react';
 import { useState } from 'react';
 
 export default function CpfItem({ cpf, id, created_at, cpf_status }: CpfType) {
   const [isVisible, setIsVisible] = useState(false);
-
-  const formatCpf = (cpf: string, isVisible: boolean) => {
-    const clean = cpf.replace(/\D/g, '');
-
-    if (isVisible) {
-      return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
-    }
-    return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.***.***-$4');
-  };
 
   return (
     <li key={id} className="flex items-center justify-between gap-3 py-3">

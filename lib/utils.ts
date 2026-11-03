@@ -1,6 +1,18 @@
 export { cn } from 'cn';
 
 /******************
+ Ocultar CPF
+ ******************/
+export const formatCpf = (cpf: string, isVisible: boolean) => {
+  const clean = cpf.replace(/\D/g, '');
+
+  if (isVisible) {
+    return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.$2.$3-$4');
+  }
+  return clean.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, '$1.***.***-$4');
+};
+
+/******************
  Máscara para o campo de CPF
  ******************/
 export const maskCpf = (value: string) => {

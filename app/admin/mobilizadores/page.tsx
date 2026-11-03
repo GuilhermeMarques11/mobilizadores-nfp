@@ -1,7 +1,4 @@
-import MobilizerList from '@/components/admin/mobilizer-list';
-import { Loader } from 'lucide-react';
-import { Suspense } from 'react';
-
+import MobilizerList from '@/components/admin/mobilizer-list/mobilizer-list';
 interface PageProps {
   searchParams: Promise<{ q?: string; status?: string }>;
 }
@@ -17,9 +14,8 @@ export default function MobilizerListPage({ searchParams }: PageProps) {
           Analise cadastros e acompanhe o status de cada mobilizador
         </p>
       </div>
-      <Suspense fallback={<Loader className="animate-spin" />}>
-        <MobilizerList searchParams={searchParams} />
-      </Suspense>
+
+      <MobilizerList searchParams={searchParams} />
     </main>
   );
 }

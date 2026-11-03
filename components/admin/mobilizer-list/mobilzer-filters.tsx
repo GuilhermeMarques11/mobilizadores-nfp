@@ -1,4 +1,4 @@
-import ButtonFilter from './button-filter';
+import ButtonFilter from '../button-filter';
 import MobilizerInputSearch from './mobilizer-input-search';
 
 export default function MobilizerFilters() {

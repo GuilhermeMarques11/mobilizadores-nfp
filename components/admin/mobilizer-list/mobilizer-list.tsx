@@ -1,4 +1,4 @@
-import MobilizerItem from '@/components/admin/mobilizer-item';
+import MobilizerItem from '@/components/admin/mobilizer-list/mobilizer-item';
 import { createClient } from '@/lib/supabase/server';
 import MobilizerFilters from './mobilzer-filters';
 import { connection } from 'next/server';
@@ -21,7 +21,7 @@ export default async function MobilizerList({
 
   let query = supabase
     .from('profiles')
-    .select('id, full_name, email, city, status, created_at, cpfs(id)')
+    .select('id, full_name, email, city, status, created_at, role, cpfs(id)')
     .eq('role', 'mobilizer');
 
   if (searchTerm) {
