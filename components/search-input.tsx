@@ -5,7 +5,11 @@ import { Loader2, Search } from 'lucide-react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { useTransition } from 'react';
 
-export default function MobilizerInputSearch() {
+interface SearchInputProps {
+  placeholder: string;
+}
+
+export default function SearchInput({ placeholder }: SearchInputProps) {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -32,7 +36,7 @@ export default function MobilizerInputSearch() {
       </span>
       <Input
         type="search"
-        placeholder="Buscar por nome, e-mail ou cidade"
+        placeholder={placeholder}
         defaultValue={searchParams.get('q') || ''}
         onChange={(e) => handleSearch(e.target.value)}
         className="h-10 w-full rounded-lg border border-[#E5E7EB] bg-white pl-9 pr-3 text-sm"

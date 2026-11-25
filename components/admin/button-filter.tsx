@@ -8,11 +8,13 @@ import { Loader } from 'lucide-react';
 interface ButtonFilterProps {
   statusValue: string;
   label: string;
+  count?: number;
 }
 
 export default function ButtonFilter({
   statusValue,
   label,
+  count,
 }: ButtonFilterProps) {
   const router = useRouter();
   const pathname = usePathname();
@@ -44,7 +46,8 @@ export default function ButtonFilter({
       disabled={isPending}
       className={`rounded-full border px-4 py-1.5 text-sm font-bold transition  cursor-pointer ${isActive ? 'bg-[#6b6b38] text-white' : 'bg-white border-[#E5E7EB] text-gray-700 hover:bg-[#6B6B38]/10'}`}
     >
-      {label} {isPending && <Loader className="animate-spin" />}
+      {label} <span className="opacity-75">{count}</span>
+      {isPending && <Loader className="animate-spin" />}
     </Button>
   );
 }

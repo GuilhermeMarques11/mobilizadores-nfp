@@ -1,7 +1,7 @@
-import AccountRejected from '@/components/dashboard/account-rejected';
-import FullDashboard from '@/components/dashboard/full-dashboard';
-import PendingApproval from '@/components/dashboard/pending-approval';
-import TermsSignature from '@/components/dashboard/terms-signature';
+import AccountRejected from '@/components/mobilizer/account-rejected';
+import FullDashboard from '@/components/mobilizer/full-dashboard';
+import PendingApproval from '@/components/mobilizer/pending-approval';
+import TermsSignature from '@/components/mobilizer/terms-signature';
 import { createClient } from '@/lib/supabase/server';
 import { connection } from 'next/server';
 

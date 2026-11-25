@@ -106,6 +106,7 @@ export default function MobilizerItem({
             <>
               <Button
                 onClick={handleApproveClick}
+                disabled={isPending}
                 className="inline-flex items-center justify-center gap-2 bg-[#E06138] text-white hover:bg-[#C8512B] cursor-pointer rounded-lg"
               >
                 {isPending ? (

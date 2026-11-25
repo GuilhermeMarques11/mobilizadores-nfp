@@ -1,4 +1,4 @@
-import HeaderMobilizer from '@/components/dashboard/header-mobilizer';
+import HeaderMobilizer from '@/components/mobilizer/header-mobilizer';
 import { createClient } from '@/lib/supabase/server';
 import { connection } from 'next/server';
 

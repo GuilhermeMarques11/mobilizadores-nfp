@@ -2,10 +2,11 @@ import { createClient } from '@/lib/supabase/server';
 import CpfListItem from './cpf-list-item';
 import { connection } from 'next/server';
 import ShowCpfsButton from './show-cpfs-button';
+import ButtonFilter from '../button-filter';
 
 interface CpfListTableProps {
   id: string;
-  searchParams: Promise<{ showCpfs?: string }>;
+  searchParams: Promise<{ showCpfs?: string; status?: string }>;
 }
 
 export default async function CpfListTable({
@@ -13,13 +14,40 @@ export default async function CpfListTable({
   searchParams,
 }: CpfListTableProps) {
   const resolvedParams = await searchParams;
+  const statusFilter = resolvedParams?.status || '';
   const isVisible = resolvedParams?.showCpfs === 'true';
+
   await connection();
+
   const supabase = await createClient();
-  const { data: cpfs } = await supabase
+
+  // Busca apenas a coluna de status de todos os CPFs do mobilizador para calcularmos os totais
+  const { data: allCpfs } = await supabase
+    .from('cpfs')
+    .select('cpf_status')
+    .eq('user_id', id);
+
+  // Calculamos as contagens para cada status
+  const totalCount = allCpfs?.length || 0;
+  const approvedCount =
+    allCpfs?.filter((c) => c.cpf_status === 'APPROVED').length || 0;
+  const pendingCount =
+    allCpfs?.filter((c) => c.cpf_status === 'PENDING').length || 0;
+  const rejectedCount =
+    allCpfs?.filter((c) => c.cpf_status === 'REJECTED').length || 0;
+
+  // Recupera os dados da tabela cpfs do mobilizador atual
+  let query = supabase
     .from('cpfs')
     .select('cpf, created_at, cpf_status, id, user_id')
     .eq('user_id', id);
+
+  // Traz apenas os registros em que a coluna cpf_status seja igual ao filtro selecionado
+  if (statusFilter) {
+    query = query.eq('cpf_status', statusFilter);
+  }
+
+  const { data: cpfs } = await query;
 
   if (!cpfs) {
     return <p className="text-gray-500">Nenhum CPF encontrado.</p>;
@@ -29,7 +57,25 @@ export default async function CpfListTable({
     <section className="rounded-2xl border border-[#E5E7EB] bg-white shadow-sm">
       <div className="flex items-center justify-between gap-3 border-b border-[#E5E7EB] px-5 py-4">
         <h2 className="text-lg font-extrabold">CPFs do mobilizador</h2>
-        {cpfs.length > 0 && <ShowCpfsButton />}
+        {(totalCount ?? 0) > 0 && <ShowCpfsButton />}
+      </div>
+      <div className="flex flex-wrap gap-2 px-5 py-3">
+        <ButtonFilter statusValue="" count={totalCount} label="Todos" />
+        <ButtonFilter
+          statusValue="APPROVED"
+          count={approvedCount}
+          label="Aprovado"
+        />
+        <ButtonFilter
+          statusValue="PENDING"
+          count={pendingCount}
+          label="Pendente"
+        />
+        <ButtonFilter
+          statusValue="REJECTED"
+          count={rejectedCount}
+          label="Rejeitado"
+        />
       </div>
       <table className="w-full">
         <thead className="border-y-2 border-y-[#E5A823]/0 border-b[#E5A823] bg-[#F3F1E6]">
@@ -62,7 +108,7 @@ export default async function CpfListTable({
                 colSpan={3}
                 className="py-8 text-center text-gray-500 text-sm"
               >
-                Este mobilizador ainda não cadastrou nenhum CPF.
+                Nenhum CPF encontrado.
               </td>
             </tr>
           )}

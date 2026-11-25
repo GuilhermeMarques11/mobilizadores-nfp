@@ -1,5 +1,5 @@
+import SearchInput from '@/components/search-input';
 import ButtonFilter from '../button-filter';
-import MobilizerInputSearch from './mobilizer-input-search';
 
 export default function MobilizerFilters() {
   return (
@@ -11,7 +11,7 @@ export default function MobilizerFilters() {
         <ButtonFilter statusValue="ACTIVE" label="Ativo" />
         <ButtonFilter statusValue="REJECTED" label="Rejeitado" />
       </div>
-      <MobilizerInputSearch />
+      <SearchInput placeholder="Buscar por nome, e-mail ou cidade" />
     </div>
   );
 }

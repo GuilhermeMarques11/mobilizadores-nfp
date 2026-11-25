@@ -22,8 +22,8 @@ export default function AccountRejected() {
       </CardHeader>
       <CardDescription>
         Sua solicitação não foi aprovada no momento. Isso pode acontecer quando
-        há informações incompletas ou divergentes. Fale cm a equipe da ABBA para
-        entender o motivo e tentar novamente.
+        há informações incompletas ou divergentes. Fale com a equipe da ABBA
+        para entender o motivo e tentar novamente.
       </CardDescription>
       <CardFooter>
         <Link

@@ -1,11 +1,11 @@
 'use client';
 
 import {
+  Database,
   FileUp,
   Heart,
   LayoutDashboard,
   LogOut,
-  User2,
   Users,
 } from 'lucide-react';
 import {
@@ -30,6 +30,11 @@ import { getInitials } from '@/lib/utils';
 const items = [
   { title: 'Painel', url: '/admin/painel', icon: LayoutDashboard },
   { title: 'Mobilizadores', url: '/admin/mobilizadores', icon: Users },
+  {
+    title: 'Base Geral de CPFs',
+    url: '/admin/base-geral-cpfs',
+    icon: Database,
+  },
   { title: 'Motor NFP', url: '/admin/motor-nfp', icon: FileUp },
 ];
 
